@@ -91,7 +91,7 @@ router.post('/registerCandidat', async (req, res) => {
 // LOGIN Candidat
 // JSON
 
-/*router.post("/loginCandidat", async (req, res) => {
+router.post("/loginCandidat", async (req, res) => {
     
         
         
@@ -132,5 +132,5 @@ router.post('/registerCandidat', async (req, res) => {
     }
 
 });
-*/
+
 module.exports = router;
