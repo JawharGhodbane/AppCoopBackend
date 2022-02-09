@@ -25,10 +25,10 @@ const candidatSchema = new Schema(
             required: true,
             select: false
         },
-        photo: {
+       /* photo: {
             type: String,
             required: false
-        },
+        },*/
        
     }
 );

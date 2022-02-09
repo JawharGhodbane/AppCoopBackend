@@ -6,6 +6,7 @@ const path = require("path");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../config/auth");
+var ObjectId = require('mongoose').Types.ObjectId;
 
 // INITIALIZE ROUTER
 const router = express.Router();
@@ -125,12 +126,82 @@ router.post("/loginCandidat", async (req, res) => {
         );
 
         // RETURN Candidat TOKEN
-        res.json(token);
+        return res.send({
+            success: true,
+            message: 'Candidat logged in successfuly'
+          });
     }
     else {
         res.status(400).send({ error: "Invalid Credentials" });
     }
 
 });
+
+// DELETE Candidat
+// JSON
+
+router.delete('/candidats/delete/:id', (req, res) => {
+
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id))
+    return res.status(400).send(`No record with given id : ${id}`);
+
+    Candidat.findByIdAndDelete(id)
+        .then((result) => {
+            //res.send(result);
+            return res.send({
+                success: true,
+                message: 'candidat deleted successfuly'
+              });
+        })
+        .catch((err) => {
+            res.send(err);
+        })
+
+})
+
+// UPDATE Candidat
+// FORM-DATA
+
+router.put('/candidats/update/:id', async (req, res) => {
+
+    if (!ObjectId.isValid(req.params.id))
+    return res.status(400).send(`No record with given id : ${req.params.id}`);
+    var _cand = {
+        nom: req.body.nom,
+        prenom: req.body.position,
+        pays_origine: req.body.pays_origine,
+        email: req.body.email,
+        mot_de_passe: req.body.mot_de_passe
+    };
+
+    _cand.mot_de_passe = await bcrypt.hash(_cand.mot_de_passe, 10);
+
+    Candidat.findByIdAndUpdate(req.params.id, { $set: _cand }, { new: true }, (err, doc) => {
+        if (!err) { res.send(doc); }
+        else { console.log('Error in Candidat Update :' + JSON.stringify(err, undefined_cand)); }
+    });
+});
+
+//get by ID
+router.get('/candidats/:id', (req, res) => {
+    if (!ObjectId.isValid(req.params.id))
+        return res.status(400).send(`No record with given id : ${req.params.id}`);
+
+    Candidat.findById(req.params.id, (err, doc) => {
+        if (!err) { res.send(doc); }
+        else { res.send('Error in Retriving Candidat :' + JSON.stringify(err, undefined, 2)); }
+    });
+});
+
+//GET ALL
+router.get('/candidats', (req, res) => {
+    Candidat.find((err, docs) => {
+        if (!err) { res.send(docs); }
+        else { res.send('Error in Retriving Candidats :' + JSON.stringify(err, undefined, 2)); }
+    });
+});
+
 
 module.exports = router;

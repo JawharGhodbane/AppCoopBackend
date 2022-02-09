@@ -18,22 +18,28 @@ const app = express();
 
 //Import all routes
 const CandidatsRoutes = require('./routes/candidats');
-
+const FilieresRoutes = require('./routes/filieres');
+const EtabsRoutes = require('./routes/etabs');
+const UnivsRoutes = require ('./routes/univs');
+const CandidaturesRoutes = require ('./routes/candidatures');
+const AdminRoutes = require ('./routes/admin');
 //---------------- Middlewares ----------------//
 //CROS MW
 app.use(cors());
 //Body Parser MW
 app.use(bodayParser.json());
-//add other middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(cors);
 //Static public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Use all routes
 app.use(CandidatsRoutes);
-
+app.use(FilieresRoutes);
+app.use(EtabsRoutes);
+app.use(UnivsRoutes);
+app.use(CandidaturesRoutes);
+app.use(AdminRoutes);
 //Start the server
 app.listen(process.env.PORT, () => {
   console.log('Express Server Started');
