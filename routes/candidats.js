@@ -41,7 +41,7 @@ router.post('/registerCandidat', async (req, res) => {
         _cand.mot_de_passe = await bcrypt.hash(_cand.mot_de_passe, 10);
 
             // PHOTO
-        if (req.files) {
+       /* if (req.files) {
 
             if (req.files.pdp) {
 
@@ -52,7 +52,7 @@ router.post('/registerCandidat', async (req, res) => {
                 pdp.mv('./files/' + pdp.name);
                 _cand.photo = pdp.name;
             }
-        }
+        }*/
 
         console.log(_cand);
 

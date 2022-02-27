@@ -4,14 +4,10 @@ const Schema = mongoose.Schema;
 const candidatureSchema = new Schema(
     {
 
-        nom: {
-            type: String,
-            required: true
-        },
-
-        prenom: {
-            type: String,
-            required: true
+      //One candidat reference
+        id_candidat: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Candidat"
         },
 
         num_passeport: {
