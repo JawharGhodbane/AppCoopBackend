@@ -25,6 +25,11 @@ const candidatSchema = new Schema(
             required: true,
             select: false
         },
+
+        new_mot_de_passe: {
+            type:String,
+            required: false,
+        }
        /* photo: {
             type: String,
             required: false

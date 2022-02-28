@@ -203,5 +203,25 @@ router.get('/candidats', (req, res) => {
     });
 });
 
+// CHANGE PASSWORD
+router.put('/candidats/change_mdp/:id', async (req, res) => {
+    const id = req.params.id;
+    const _cand = await Candidat.findById(id).select('+mot_de_passe');
+    if (_cand) {
+        old_mdp = req.body.mot_de_passe;
+        new_mdp = req.body.new_mot_de_passe;
+        if (await bcrypt.compare(old_mdp, _cand.mot_de_passe)) {
+            _cand.mot_de_passe = await bcrypt.hash(new_mdp, 10);
+            await Candidat.findByIdAndUpdate(id, _cand);
+            res.send("password changed");
+        }
+        else {
+            res.status(400).send("same password");
+        }
+    }
+    else {
+        res.send("Candidat NOT FOUND");
+    }
+});
 
 module.exports = router;
