@@ -1,5 +1,4 @@
 # AppCoopBackend
-C'est la partie backend d'une application de gestion
+C'est la partie backend d'une application de gestionDes candidatures des etudiants.
 
-Des candidatures des etudiants.
-Tech : nodejs/exoressjs + mongoDB
+Tech : nodejs/expressjs + mongoDB.
